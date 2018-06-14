@@ -76,6 +76,9 @@ defmodule TaskBunny.Mixfile do
       {:amqp, "~> 0.3.1"},
       {:poison, "~> 2.0 or ~> 3.0"},
 
+      # configuration
+      {:deferred_config, "~> 0.1.0"},
+
       # dev/test
       {:credo, "~> 0.6", only: [:dev]},
       {:dialyxir, "~> 0.4", only: [:dev], runtime: false},

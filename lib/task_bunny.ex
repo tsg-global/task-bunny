@@ -11,6 +11,8 @@ defmodule TaskBunny do
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
+    DeferredConfig.populate(:task_bunny)
+
     register_metrics()
 
     # Define workers and child supervisors to be supervised
