@@ -39,15 +39,16 @@ defmodule TaskBunny.Queue do
     retry_queue = retry_queue(work_queue)
     rejected_queue = rejected_queue(work_queue)
 
-    work = declare(channel, work_queue, durable: true)
-    rejected = declare(channel, rejected_queue, durable: true)
+    work = declare(channel, work_queue, durable: true, arguments: [{"x-queue-type", "quorum"}])
+    rejected = declare(channel, rejected_queue, durable: true, arguments: [{"x-queue-type", "quorum"}])
 
     # Set main queue as dead letter exchange of retry queue.
     # It will requeue the message once message TTL is over.
     retry_options = [
       arguments: [
         {"x-dead-letter-exchange", :longstr, ""},
-        {"x-dead-letter-routing-key", :longstr, work_queue}
+        {"x-dead-letter-routing-key", :longstr, work_queue},
+        {"x-queue-type", "quorum"}
       ],
       durable: true
     ]
@@ -57,7 +58,8 @@ defmodule TaskBunny.Queue do
     scheduled_options = [
       arguments: [
         {"x-dead-letter-exchange", :longstr, ""},
-        {"x-dead-letter-routing-key", :longstr, work_queue}
+        {"x-dead-letter-routing-key", :longstr, work_queue},
+        {"x-queue-type", "quorum"}
       ],
       durable: true
     ]
