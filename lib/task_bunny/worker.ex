@@ -281,9 +281,7 @@ defmodule TaskBunny.Worker do
 
   defp log_msg(message, state, additional \\ nil) do
     message =
-      "TaskBunny.Worker: #{message}. Queue: #{state.queue}. Concurrency: #{state.concurrency}. PID: #{
-        inspect(self())
-      }."
+      "TaskBunny.Worker: #{message}. Queue: #{state.queue}. Concurrency: #{state.concurrency}. PID: #{inspect(self())}."
 
     if additional do
       "#{message} #{inspect(additional)}"
