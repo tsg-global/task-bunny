@@ -8,7 +8,8 @@ defmodule TaskBunny.FailureBackend.Logger do
 
   # Callback for FailureBackend
   def report_job_error(error = %JobError{}) do
-    get_job_error_message(error)
+    error
+    |> get_job_error_message()
     |> do_report(error.reject)
   end
 
@@ -17,82 +18,45 @@ defmodule TaskBunny.FailureBackend.Logger do
   """
   @spec get_job_error_message(JobError.t()) :: String.t()
   def get_job_error_message(error = %JobError{error_type: :exception}) do
-    """
-    TaskBunny - #{error.job} failed for an exception.
+    message = "TaskBunny - #{error.job} failed for an exception."
 
-    Exception:
-    #{my_inspect(error.exception)}
+    meta = [
+      exception: inspect(error.exception),
+      stacktrace: Exception.format_stacktrace(error.stacktrace)
+    ]
 
-    #{common_message(error)}
-
-    Stacktrace:
-    #{Exception.format_stacktrace(error.stacktrace)}
-    """
+    {message, meta}
   end
 
   def get_job_error_message(error = %JobError{error_type: :return_value}) do
-    """
-    TaskBunny - #{error.job} failed for an invalid return value.
+    message = "TaskBunny - #{error.job} failed for an invalid return value."
 
-    Return value:
-    #{my_inspect(error.return_value)}
-
-    #{common_message(error)}
-    """
+    {message, error}
   end
 
   def get_job_error_message(error = %JobError{error_type: :exit}) do
-    """
-    TaskBunny - #{error.job} failed for EXIT signal.
+    message = "TaskBunny - #{error.job} failed for EXIT signal."
 
-    Reason:
-    #{my_inspect(error.reason)}
-
-    #{common_message(error)}
-    """
+    {message, error}
   end
 
   def get_job_error_message(error = %JobError{error_type: :timeout}) do
-    """
-    TaskBunny - #{error.job} failed for timeout.
+    message = "TaskBunny - #{error.job} failed for timeout."
 
-    #{common_message(error)}
-    """
+    {message, error}
   end
 
   def get_job_error_message(error = %JobError{}) do
-    """
-    TaskBunny - Failed with the unknown error type.
+    message = "TaskBunny - Failed with the unknown error type."
 
-    #{common_message(error)}
-    """
+    {message, error}
   end
 
-  defp do_report(message, rejected) do
+  defp do_report({message, metadata}, rejected) do
     if rejected do
-      Logger.error(message)
+      Logger.error(message, metadata)
     else
-      Logger.warn(message)
+      Logger.warn(message, metadata)
     end
-  end
-
-  defp common_message(error) do
-    """
-    Payload:
-      #{my_inspect(error.payload)}
-
-    History:
-      - Failed count: #{error.failed_count}
-      - Reject: #{error.reject}
-
-    Worker:
-      - Queue: #{error.queue}
-      - Concurrency: #{error.concurrency}
-      - PID: #{inspect(error.pid)}
-    """
-  end
-
-  defp my_inspect(arg) do
-    inspect(arg, pretty: true, width: 100)
   end
 end
