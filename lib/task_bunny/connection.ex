@@ -191,9 +191,7 @@ defmodule TaskBunny.Connection do
 
       error ->
         Logger.warn(
-          "TaskBunny.Connection: failed to connect to #{host} - Error: #{inspect(error)}. Retrying in #{
-            @reconnect_interval
-          } ms"
+          "TaskBunny.Connection: failed to connect to #{host} - Error: #{inspect(error)}. Retrying in #{@reconnect_interval} ms"
         )
 
         Process.send_after(self(), :connect, @reconnect_interval)
