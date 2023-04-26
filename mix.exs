@@ -83,7 +83,22 @@ defmodule TaskBunny.Mixfile do
       {:excoveralls, "~> 0.5", only: :test},
       {:inch_ex, "~> 0.5", only: [:dev, :test]},
       {:logger_file_backend, "~> 0.0.9", only: :test},
-      {:meck, "~> 0.8.2", only: :test}
+      {:meck, "~> 0.8.2", only: :test},
+      {:common_tsg, common_tsg()}
     ]
+  end
+
+  defp common_tsg do
+    env_dep_switch([path: "../common-tsg", override: true],
+      git: "git@github.com:tsg-global/common-tsg.git",
+      branch: "master"
+    )
+  end
+
+  defp env_dep_switch(local_path, remote_path) do
+    case Mix.env() do
+      local when local in [:dev, :test] -> local_path
+      _remote -> remote_path
+    end
   end
 end

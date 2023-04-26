@@ -28,6 +28,19 @@ import Config
 # here (which is why it is important to import them last).
 #
 
+config :logger,
+  backends: [:console],
+  utc_log: true,
+  level: if(config_env() == :prod, do: :info, else: :debug),
+  compile_time_purge_matching: [
+    [level_lower_than: if(config_env() == :prod, do: :info, else: :debug)]
+  ]
+
+config :logger, :console,
+  utc_log: true,
+  metadata: :all,
+  format: {CommonTSG.Logger, :format}
+
 config :task_bunny,
   hosts: [
     default: [
