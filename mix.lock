@@ -3,7 +3,7 @@
   "amqp_client": {:hex, :amqp_client, "3.9.27", "98e8ecb4e3717b6937c941c93874e284ca219a4bc5169bc7a1602fcf77833e3d", [:make, :rebar3], [{:rabbit_common, "3.9.27", [hex: :rabbit_common, repo: "hexpm", optional: false]}], "hexpm", "12f5ca7252b5ac70944e10e682defa11c67f17d0311911ed2860e95bc0dbcd75"},
   "bunt": {:hex, :bunt, "0.2.1", "e2d4792f7bc0ced7583ab54922808919518d0e57ee162901a16a1b6664ef3b14", [:mix], [], "hexpm", "a330bfb4245239787b15005e66ae6845c9cd524a288f0d141c148b02603777a5"},
   "certifi": {:hex, :certifi, "2.9.0", "6f2a475689dd47f19fb74334859d460a2dc4e3252a3324bd2111b8f0429e7e21", [:rebar3], [], "hexpm", "266da46bdb06d6c6d35fde799bcb28d36d985d424ad7c08b5bb48f5b5cdd4641"},
-  "common_tsg": {:git, "git@github.com:tsg-global/common-tsg.git", "823916069b296ff818d9038e12b10369a2617b4a", [branch: "master"]},
+  "common_tsg": {:git, "git@github.com:tsg-global/common-tsg.git", "622e15e9963b5f2a4f42d4dac251b6ef55bfb8d1", [branch: "master"]},
   "credentials_obfuscation": {:hex, :credentials_obfuscation, "3.1.0", "2c405ea0c5db7b3344aa5a99f86c33e7b6ecea97d2cb613371e1cf0d192ef2c6", [:rebar3], [], "hexpm", "04884e62b1c6cdfba999d4d6b3e99bc0a59d5e439517bc5c01767255afb7b778"},
   "credo": {:hex, :credo, "0.10.2", "03ad3a1eff79a16664ed42fc2975b5e5d0ce243d69318060c626c34720a49512", [:mix], [{:bunt, "~> 0.2.0", [hex: :bunt, repo: "hexpm", optional: false]}, {:jason, "~> 1.0", [hex: :jason, repo: "hexpm", optional: false]}], "hexpm", "539596b6774069260d5938aa73042a2f5157e1c0215aa35f5a53d83889546d14"},
   "decimal": {:hex, :decimal, "2.1.0", "4a607736e18d9a77ea44fa18388bf43bb7f7df70ff2e0d23d4238f9d18a3ad7d", [:mix], [], "hexpm", "6396853b6b4bf8b1ff2c2217121f1fad4a1aff999014a10fba60e6009194f91b"},
