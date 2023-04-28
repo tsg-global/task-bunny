@@ -54,9 +54,9 @@ defmodule TaskBunny.FailureBackend.Logger do
 
   defp do_report({message, metadata}, rejected) do
     if rejected do
-      Logger.error(message, metadata)
+      Logger.error(message, metadata: metadata)
     else
-      Logger.warn(message, metadata)
+      Logger.warn(message, metadata: metadata)
     end
   end
 end
