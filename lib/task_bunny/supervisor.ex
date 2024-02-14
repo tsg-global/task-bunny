@@ -27,20 +27,20 @@ defmodule TaskBunny.Supervisor do
     # Add Connection severs for each hosts
     connections =
       Enum.map(Config.hosts(), fn host ->
-        worker(Connection, [host], id: make_ref())
+        {Connection, host}
       end)
 
     children =
       case Initializer.alive?() do
         true -> connections
-        false -> connections ++ [worker(Initializer, [false])]
+        false -> connections ++ [{Initializer, false}]
       end
 
     # Define workers and child supervisors to be supervised
     children =
       case {Config.auto_start?(), Config.disable_worker?()} do
         {true, false} ->
-          children ++ [supervisor(WorkerSupervisor, [wsv_name])]
+          children ++ [{WorkerSupervisor, wsv_name}]
 
         {true, true} ->
           # Only connections
@@ -50,6 +50,6 @@ defmodule TaskBunny.Supervisor do
           []
       end
 
-    supervise(children, strategy: :one_for_all)
+    Supervisor.init(children, strategy: :one_for_all)
   end
 end
