@@ -18,7 +18,7 @@ defmodule TaskBunny.Consumer do
       {:ok, channel, consumer_tag}
     else
       error ->
-        Logger.warn("""
+        Logger.warning("""
         TaskBunny.Consumer: start consumer for #{queue}.
         Detail: #{inspect(error)}"
         """)
