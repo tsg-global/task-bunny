@@ -190,7 +190,7 @@ defmodule TaskBunny.Connection do
         {:noreply, {host, connection, []}}
 
       error ->
-        Logger.warn(
+        Logger.warning(
           "TaskBunny.Connection: failed to connect to #{host} - Error: #{inspect(error)}. Retrying in #{@reconnect_interval} ms"
         )
 
@@ -201,7 +201,7 @@ defmodule TaskBunny.Connection do
   end
 
   def handle_info({:DOWN, _, :process, _pid, reason}, {host, _, _}) do
-    Logger.warn("TaskBunny.Connection: disconnected from #{host} - PID: #{inspect(self())}")
+    Logger.warning("TaskBunny.Connection: disconnected from #{host} - PID: #{inspect(self())}")
 
     {:stop, {:connection_lost, reason}, {host, nil, []}}
   end
