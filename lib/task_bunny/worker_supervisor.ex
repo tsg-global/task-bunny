@@ -23,13 +23,12 @@ defmodule TaskBunny.WorkerSupervisor do
   def init([]) do
     Config.workers()
     |> Enum.map(fn config ->
-      worker(
+      {
         Worker,
-        [config],
-        id: "task_bunny.worker.#{config[:queue]}"
-      )
+        config
+      }
     end)
-    |> supervise(strategy: :one_for_one)
+    |> Supervisor.init(strategy: :one_for_one)
   end
 
   @doc """
