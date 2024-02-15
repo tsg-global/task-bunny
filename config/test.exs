@@ -7,6 +7,6 @@ config :task_bunny,
   disable_auto_start: false,
   hosts: [
     default: [
-      connect_options: "amqp://rabbitmq:rabbitmq@localhost:5672/portal?heartbeat=30"
+      connect_options: "amqp://rabbitmq:rabbitmq@localhost:5672?heartbeat=30"
     ]
   ]
