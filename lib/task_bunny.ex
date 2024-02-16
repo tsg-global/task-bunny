@@ -13,13 +13,7 @@ defmodule TaskBunny do
 
     register_metrics()
 
-    # Define workers and child supervisors to be supervised
-    children = [
-      supervisor(TaskBunny.Supervisor, [])
-    ]
-
-    opts = [strategy: :one_for_one, name: TaskBunny]
-    Supervisor.start_link(children, opts)
+    TaskBunny.Supervisor.start_link()
   end
 
   defp register_metrics do
